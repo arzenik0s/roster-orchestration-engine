@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <link rel="stylesheet" type="text/css" href="../style/events.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/style/events-menu.css"> -->
+  </head>
+  <body>
+    <header>
+      <div class="title-page">
+        <h1>Roster App</h1>
+      </div>
+      <div class="pages">
+        <li><a href="roster.html">Roster</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="events.html" class="active">Events</a></li>
+        <li><a href="tutorial.html">Help</a></li>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" id="help-icon">
+          <path d="M80 160c0-35.3 28.7-64 64-64h32c35.3 0 64 28.7 64 64v3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74V320c0 17.7 14.3 32 32 32s32-14.3 32-32v-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7V160c0-70.7-57.3-128-128-128H144C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/>
+        </svg>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" id="profile-menu">
+          <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
+        </svg>
+    </div>
+    </header>
+
+    <main>
+      <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.11/index.global.min.js'></script>
+      <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.11/index.global.min.js'></script>
+      
+      <script src='../src/sandbox.js'></script>
+      <script src='../src/code_calendar.js'></script>
+      <script src='../src/code_events.js'></script>
+      <div id='calendar'></div>
+    </main>
+
+
+    <script src='/src/index.global.js'></script>
+    <script src='/src/calendar-setup.js'></script>
+    <script>
+      document.getElementById('help-icon').addEventListener('click', function(){
+        window.location.href="/pages/tutorial.html"
+      })
+    </script>
+    <div id='calendar'></div>
+
+
+    <!-- <aside>
+    </aside> -->
+
+  </body>
+</html>

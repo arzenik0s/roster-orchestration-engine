@@ -1,3 +1,7 @@
+using System.Linq;
+using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 using Kronos.RosterWizard.Domain;
 using Kronos.RosterWizard.Presentation.ViewModels;
 

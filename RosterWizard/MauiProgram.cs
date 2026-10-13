@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
+using Microsoft.Extensions.Logging;
 using Kronos.RosterWizard.Application.Services;
 using Kronos.RosterWizard.Infrastructure;
 using Kronos.RosterWizard.Presentation.Pages;

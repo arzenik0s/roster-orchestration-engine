@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Kronos.RosterWizard.Domain;
@@ -6,19 +10,32 @@ using Kronos.RosterWizard.Infrastructure;
 
 namespace Kronos.RosterWizard.Presentation.ViewModels;
 
-public partial class RoleSelectionViewModel(Role role) : ObservableObject
+public partial class RoleSelectionViewModel : ObservableObject
 {
-    public Guid Id { get; } = role.Id;
-    public string Name { get; } = role.RoleName;
+    public Guid Id { get; }
+    public string Name { get; }
+
+    public RoleSelectionViewModel(Role role)
+    {
+        Id = role.Id;
+        Name = role.RoleName;
+    }
 
     [ObservableProperty]
     private bool isSelected;
 }
 
-public partial class StaffViewModel(IRosterRepository repository) : ViewModelBase
+public partial class StaffViewModel : ViewModelBase
 {
-    public ObservableCollection<StaffMember> Staff { get; } = [];
-    public ObservableCollection<RoleSelectionViewModel> RoleOptions { get; } = [];
+    private readonly IRosterRepository repository;
+
+    public StaffViewModel(IRosterRepository repository)
+    {
+        this.repository = repository;
+    }
+
+    public ObservableCollection<StaffMember> Staff { get; } = new ObservableCollection<StaffMember>();
+    public ObservableCollection<RoleSelectionViewModel> RoleOptions { get; } = new ObservableCollection<RoleSelectionViewModel>();
 
     [ObservableProperty] private StaffMember? selectedStaff;
     [ObservableProperty] private string firstName = "";
@@ -84,7 +101,7 @@ public partial class StaffViewModel(IRosterRepository repository) : ViewModelBas
     }
 
     [RelayCommand]
-    private async Task SaveStaffAsync()
+    private async Task SaveStaff()
     {
         if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) || string.IsNullOrWhiteSpace(Email))
         {
@@ -128,7 +145,7 @@ public partial class StaffViewModel(IRosterRepository repository) : ViewModelBas
     }
 
     [RelayCommand]
-    private async Task DeleteSelectedAsync()
+    private async Task DeleteSelected()
     {
         if (SelectedStaff is null)
         {

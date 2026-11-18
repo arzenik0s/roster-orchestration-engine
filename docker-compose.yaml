@@ -1,0 +1,52 @@
+services:
+  ollama:
+    image: ollama/ollama:${OLLAMA_VERSION:-latest}
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    # Uncomment for NVIDIA GPU acceleration:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - ollama
+    environment:
+      ConnectionStrings__Db: /data/roster.db
+      Ollama__Url: http://ollama:11434
+      Ollama__Model: ${OLLAMA_MODEL:-llama3.2:3b}
+      Roster__Interval: ${ROSTER_INTERVAL:-00:02:00}
+      Roster__WindowDays: ${ROSTER_WINDOW_DAYS:-3}
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+
+  csharp-agent:
+    profiles: ["csharp"]
+    build:
+      context: .
+      dockerfile: csharp/Dockerfile
+    depends_on:
+      - ollama
+    environment:
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+      ConnectionStrings__Db: "Data Source=/data/roster.db"
+      Ollama__Url: http://ollama:11434
+      Ollama__Model: ${OLLAMA_MODEL:-llama3.2:3b}
+      Roster__Interval: ${ROSTER_INTERVAL:-00:02:00}
+      Roster__WindowDays: ${ROSTER_WINDOW_DAYS:-3}
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+
+volumes:
+  ollama:

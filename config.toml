@@ -1,0 +1,12 @@
+[ConnectionStrings]
+Db = "data/roster.db"
+
+[Ollama]
+Url = "http://localhost:11434"
+Model = "llama3.2:3b"
+Temperature = 0.55
+Seed = 42
+
+[Roster]
+Interval = "00:02:00"
+WindowDays = 3

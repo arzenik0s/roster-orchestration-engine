@@ -1,0 +1,16 @@
+{
+  "name": "roster-lab-cpp",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "cli11",
+    "cpr",
+    "nlohmann-json",
+    "rapidcheck",
+    "sqlite3",
+    "spdlog",
+    "tl-expected",
+    "tomlplusplus",
+    "benchmark",
+    "gtest"
+  ]
+}

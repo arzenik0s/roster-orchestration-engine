@@ -1,0 +1,89 @@
+name: C++ CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+            preset: release
+          - compiler: gcc
+            cc: gcc
+            cxx: g++
+            preset: asan
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+            preset: release
+          - compiler: clang
+            cc: clang
+            cxx: clang++
+            preset: asan
+    env:
+      CC: ${{ matrix.cc }}
+      CXX: ${{ matrix.cxx }}
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      VCPKG_DISABLE_METRICS: 1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+          "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+      - name: Configure
+        run: cmake --preset "${{ matrix.preset }}"
+      - name: Build
+        run: cmake --build --preset "${{ matrix.preset }}" --parallel 2
+      - name: Test
+        run: ctest --preset "${{ matrix.preset }}"
+
+  clang-tidy:
+    runs-on: ubuntu-24.04
+    env:
+      CC: clang
+      CXX: clang++
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      VCPKG_DISABLE_METRICS: 1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-tidy
+        run: sudo apt-get update && sudo apt-get install -y clang-tidy
+      - name: Bootstrap vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+          "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+      - name: Configure compile database
+        run: cmake --preset debug
+      - name: Run clang-tidy
+        run: clang-tidy -p build/debug src/core/*.cpp src/adapters/*.cpp src/app/*.cpp
+
+  thread-sanitizer:
+    runs-on: ubuntu-24.04
+    env:
+      CC: clang
+      CXX: clang++
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      VCPKG_DISABLE_METRICS: 1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bootstrap vcpkg
+        run: |
+          git clone https://github.com/microsoft/vcpkg.git "$VCPKG_ROOT"
+          "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+      - name: Configure
+        run: cmake --preset tsan
+      - name: Build scheduler tests
+        run: cmake --build --preset tsan --target roster-tests --parallel 2
+      - name: Run scheduler test under TSan
+        run: ctest --test-dir build/tsan --output-on-failure --tests-regex Scheduler

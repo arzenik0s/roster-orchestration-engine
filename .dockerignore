@@ -2,10 +2,6 @@
 .vs
 build
 data
-RosterLab/bin
-RosterLab/obj
-csharp/RosterLab/bin
-csharp/RosterLab/obj
 *.db
 *.db-wal
 *.db-shm

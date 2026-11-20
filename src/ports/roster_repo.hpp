@@ -28,6 +28,7 @@ class IRosterRepo {
     [[nodiscard]] virtual Expected<std::vector<Staff>, std::string> load_staff() = 0;
     [[nodiscard]] virtual Expected<Day, std::string> next_window_start(Day today) = 0;
     [[nodiscard]] virtual Expected<void, std::string> save_run(const RunData &run) = 0;
+    [[nodiscard]] virtual std::expected<void, RepoError> ExportAssignmentsCsv(const std::string& path) = 0;
 };
 
 } // namespace roster

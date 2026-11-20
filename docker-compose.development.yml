@@ -1,0 +1,20 @@
+services:
+  db:
+    env_file:
+      - .env_dev_db
+
+  web:
+    env_file:
+      - .env_dev_web
+    build: .
+    command: uv run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./roster_wizard:/roster_app/roster_wizard
+
+  celery:
+    env_file:
+      - .env_dev_web
+    build: .
+    command: uv run watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A roster_project worker -l INFO
+    volumes:
+      - ./roster_wizard:/roster_app/roster_wizard

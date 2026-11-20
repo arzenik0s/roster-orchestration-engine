@@ -1,0 +1,14 @@
+services:
+  db:
+    env_file:
+      - .env_demo_db
+
+  web:
+    env_file:
+      - .env_demo_web
+    command: uv run python /roster_app/roster_wizard/manage.py runserver 0.0.0.0:8000
+
+  celery:
+    env_file:
+      - .env_demo_web
+    command: uv run celery -A roster_project worker -l INFO

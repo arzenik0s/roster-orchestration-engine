@@ -1,7 +1,8 @@
 <div align="center">
-    <img width="100" height="100" alt="shift-sync-app-logo" src="https://github.com/user-attachments/assets/34552e40-9a62-4f3b-834d-e5481f28f7a6" />
+    <img width="100" height="100" alt="kronos-app-logo" title="Kronos | Roster Orchestration Agent" src="https://github.com/user-attachments/assets/28d1ef66-3b9c-4151-9dda-f36d3451b978" />
 
-# KronOS | Agentic Roster Wizard
+# KronOS | ShiftSync Agentic Wizard
+### Workforce Orchestration System
 
 _An agentic AI roster management system for different team modes: native on Windows, iOS and Android._
 
@@ -13,6 +14,23 @@ _An agentic AI roster management system for different team modes: native on Wind
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 </div>
+
+## Quick start (short)
+
+1. Install .NET 10 SDK: https://dotnet.microsoft.com
+2. Install MAUI workloads (recommended via Visual Studio 2026 or CLI):
+
+   dotnet workload restore
+
+3. From the repository root in PowerShell:
+
+   dotnet restore
+   dotnet build RosterWizard\Kronos.RosterWizard.csproj -f net10.0-windows10.0.19041.0
+
+4. Open solution in Visual Studio 2026, set `Kronos.RosterWizard` as startup project, choose a target (Windows Machine or Android emulator) and Cyber Maturity and Supplier Risk Tracker | Self-assess your cyber maturity, map vendor risk, and get a remediation backlog.press F5.
+
+If workload installation fails, open Visual Studio and accept prompts to install MAUI components — Visual Studio handles required native SDKs and platform components more reliably on Windows.
+
 
 
 `KronOS | ShiftSync` is a desktop-first, native .NET MAUI roster manager for nursing teams, event ambassadors, session supervisors, and custom scheduling flows. This repository contains the C# port of the roster-wizard workflow: configure staff, roles, repeating day groups, shifts, exact skill-mix requirements, shift sequences, leave and weighted staff requests; generate, manually edit, review and export a roster.
